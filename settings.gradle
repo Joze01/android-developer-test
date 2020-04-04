@@ -1,4 +1,4 @@
-rootProject.name='ADT'
+rootProject.name='Android Developer Test'
 include ':app'
 include ':core'
 include ':data'

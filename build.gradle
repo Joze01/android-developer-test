@@ -1,29 +1,132 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.61'
+    ext.kotlin_version = '1.3.1'
+
+    apply from: 'dependencies.gradle'
+
     repositories {
         google()
         jcenter()
-        
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
+    dependencies {
+        classpath "com.android.tools.build:gradle:${gradle_version}"
+        classpath rootProject.ext.classpathDependecy.gradle_pluggin
+        classpath rootProject.ext.classpathDependecy.ktlin_pluggin
+        classpath rootProject.ext.classpathDependecy.jacoco_core
+        classpath rootProject.ext.classpathDependecy.sonar_qube
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
+}
+
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6"
 }
 
 allprojects {
     repositories {
         google()
         jcenter()
-        
     }
+
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+    apply plugin: 'jacoco'
+}
+
+subprojects {
+    tasks.withType(Test) {
+        maxHeapSize = "3g"
+    }
+}
+
+detekt {
+    version = "1.0.0.RC6"
+
+    profile("main") {
+        config = "$projectDir/detekt.yml"
+        filters = ".*test.*,.*/resources/.*,.*/tmp/.*,.*/\\?/.*,.*/build/.*"
+        configResource = "detekt.yml"
+        output = "reports"
+        outputName = "baseline"
+        baseline = "reports/baseline.xml"
+    }
+
+    profile("app") {
+        input = "$projectDir/src/main/java"
+    }
+
+    profile("test") {
+        filters = ".*/src/main/java/.*,.*/build/.*,.*/resources/.*,.*/\\?/.*"
+        configResource = "/default-detekt-config.yml"
+        config = null
+    }
+}
+
+ktlint {
+    debug = true
+    verbose = true
+    android = false
+    reporters = ["PLAIN", "CHECKSTYLE"]
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+//Returns version in SemVer format
+def readVersionName() {
+    def version = readVersion()
+    return "${version['major']}.${version['minor']}.${version['patch']}"
+}
+
+//Returns build number as an int
+def readVersionCode() {
+    def version = readVersion()
+    def codeVersion = version['build'] as int
+    return codeVersion
+}
+
+def readVersion() {
+    def versionFile = new File(project.rootDir, 'version.properties')
+    def version = new Properties()
+    def stream
+
+    try {
+        stream = new FileInputStream(versionFile)
+        version.load(stream)
+    } catch (FileNotFoundException ex) {
+    } finally {
+        if (stream != null) stream.close()
+    }
+
+    if (!version['major']) version['major'] = "0"
+    if (!version['minor']) version['minor'] = "0"
+    if (!version['build']) version['build'] = "0"
+
+    return version
+}
+
+task localCheck(type: GradleBuild) {
+    tasks = ['ktlintFormat', 'detektCheck']
+    group = "verification"
+    description = "Runs a local check before doing a manual unit test run."
+}
+
+task sanityCheck(type: GradleBuild) {
+    tasks = ['lint', 'ktlintCheck', 'ktlintFormat', 'detektCheck', 'testDebugUnitTest']
+    group = "verification"
+    description = "Runs lint, ktlintCheck, ktlintFormat and testDebugUnitTest in order to check code sanity"
+}
+
+task coverageCheck(type: GradleBuild) {
+    tasks = ['sanityCheck', 'jacocoTestCoverageVerificationDebugApp', 'jacocoTestCoverageVerificationDebugCore', 'jacocoTestCoverageVerificationDebugData']
+    group = "verification"
+    description = "Runs sanityCheck, and jacocoTestCoverageVerification for all modules"
 }

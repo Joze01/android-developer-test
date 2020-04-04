@@ -1,16 +1,18 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: '../jacoco.gradle'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion rootProject.ext.compile_sdk_version
+    buildToolsVersion rootProject.ext.buildTool_version
 
     defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.min_sdk_version
+        targetSdkVersion rootProject.ext.target_sdk_version
+        versionCode readVersionCode()
+        versionName readVersionName()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -21,16 +23,53 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Kotlin:
+    implementation rootProject.ext.commonDependency.kotlin_stdlib_jdk7
+    implementation rootProject.ext.commonDependency.kotlinx_coroutines
+    implementation rootProject.ext.commonDependency.core_ktlx
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+
+
+    // Room:
+    implementation rootProject.ext.roomDependency.room_runtime
+    kapt rootProject.ext.roomDependency.room_compiler
+
+    // LiveData:
+    implementation rootProject.ext.lifecycleDependency.lifecycle_livedata
+
+    // Third Party:
+    debugImplementation rootProject.ext.debugDependecy.leak_canary
+
+    // Test Dependencies:
+    implementation rootProject.ext.testCommonDependency.test_core
+    implementation rootProject.ext.testCommonDependency.fragment_test
+    testImplementation rootProject.ext.testCommonDependency.fragment_test
+    testImplementation rootProject.ext.testCommonDependency.runner
+    testImplementation rootProject.ext.testCommonDependency.junit_ext
+    testImplementation rootProject.ext.testCommonDependency.espresso_core
+    testImplementation rootProject.ext.testCommonDependency.robolectric
+    testImplementation rootProject.ext.testCommonDependency.junit
+
+    // Instrumentation Test Dependencies:
+    androidTestImplementation rootProject.ext.testCommonDependency.junit_ext
+    androidTestImplementation rootProject.ext.testCommonDependency.espresso_core
 }
