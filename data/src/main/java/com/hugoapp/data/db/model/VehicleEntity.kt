@@ -4,9 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Vehicle(
+data class VehicleEntity(
     @PrimaryKey
-    val plateNumber: String
-    val type: 
-
+    val plateNumber: String,
+    val vehicleTypeId: Int,
+    val isPaymentRequired: Boolean = true,
+    val isLargeDuration: Boolean = false
 )
