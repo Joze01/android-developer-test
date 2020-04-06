@@ -9,8 +9,8 @@ data class MonthEntryLogModel(
     @PrimaryKey
     val id: Int,
     val vehiclePlateId: String,
-    val entryDateTime: Date,
-    val exitDateTime: Date? = null,
+    val entryDateTime: String,
+    val exitDateTime: String? = null,
     val enable: Boolean = false
 )
 
