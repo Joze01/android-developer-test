@@ -1,0 +1,85 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: '../jacoco.gradle'
+android {
+    compileSdkVersion rootProject.ext.compile_sdk_version
+    buildToolsVersion rootProject.ext.buildTool_version
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.min_sdk_version
+        targetSdkVersion rootProject.ext.target_sdk_version
+        versionCode readVersionCode()
+        versionName readVersionName()
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+        test.java.srcDirs += 'src/test/java'
+        androidTest.java.srcDirs += 'src/androidTest/java'
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    testOptions {
+        animationsDisabled true
+        unitTests.returnDefaultValues = true
+
+        unitTests {
+            all {
+                jvmArgs '-noverify'
+                systemProperty 'user.home', System.getenv('HOME')
+            }
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
+}
+
+dependencies {
+    api project(':core')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.commonDependency.kotlin_stdlib_jdk7
+    implementation rootProject.ext.commonDependency.kotlinx_coroutines
+
+    // Room:
+    api rootProject.ext.roomDependency.room_runtime
+    implementation rootProject.ext.roomDependency.room_ktx
+    kapt rootProject.ext.roomDependency.room_compiler
+
+    // LiveData:
+    implementation rootProject.ext.lifecycleDependency.lifecycle_livedata
+
+    // Retrofit:
+    implementation rootProject.ext.retrofitDependency.retrofit
+    implementation rootProject.ext.retrofitDependency.converter_gson
+    implementation rootProject.ext.retrofitDependency.converter_scalars
+
+    // Test Dependencies:
+    testImplementation rootProject.ext.testCommonDependency.junit
+    testImplementation rootProject.ext.testCommonDependency.junit_ext
+    testImplementation rootProject.ext.testCommonDependency.espresso_core
+
+    // Instrumentation Test Dependencies:
+    androidTestImplementation rootProject.ext.testCommonDependency.junit_ext
+    androidTestImplementation rootProject.ext.testCommonDependency.espresso_core
+
+    // Third Party
+    implementation rootProject.ext.thirdPartyDependencies.glide
+}

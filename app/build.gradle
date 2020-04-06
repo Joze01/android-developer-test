@@ -1,0 +1,153 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply from: '../jacoco.gradle'
+
+android {
+    compileSdkVersion rootProject.ext.compile_sdk_version
+    buildToolsVersion rootProject.ext.buildTool_version
+
+    defaultConfig {
+        applicationId "com.applaudo.sacredvalley"
+        minSdkVersion rootProject.ext.min_sdk_version
+        targetSdkVersion rootProject.ext.target_sdk_version
+        versionCode readVersionCode()
+        versionName readVersionName()
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testHandleProfiling true
+        testFunctionalTest true
+
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+        test.java.srcDirs += 'src/test/java'
+        androidTest.java.srcDirs += 'src/androidTest/java'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(String.valueOf(System.getenv("KEY_STORE_FILE")))
+            storePassword String.valueOf(System.env.ANDROID_PASSWORD)
+            keyAlias String.valueOf(System.env.ANDROID_KEY_ALIAS)
+            keyPassword String.valueOf(System.env.ANDROID_PASSWORD)
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    lintOptions {
+        //Disabling ImageView ContentDescription warnings, since we're not supporting Accessibility:
+        disable 'ContentDescription'
+    }
+
+    testOptions {
+        animationsDisabled true
+        unitTests {
+            all {
+                systemProperty 'user.home', System.getenv('HOME')
+                maxParallelForks = Runtime.runtime.availableProcessors()
+                forkEvery = 25
+            }
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Module Dependencies:
+    implementation project(":core")
+    implementation project(':data')
+
+    // Koin:
+    implementation rootProject.ext.injectionDependency.koin_viewmodel
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+
+
+    // Retrofit:
+    implementation rootProject.ext.retrofitDependency.retrofit
+    implementation rootProject.ext.retrofitDependency.converter_gson
+    implementation rootProject.ext.retrofitDependency.retrofit_coroutine_adapter
+    implementation rootProject.ext.okhttp3Dependency.logging_interceptor
+
+    // Android:
+    implementation rootProject.ext.commonDependency.appcompat_legacy
+    implementation rootProject.ext.commonDependency.kotlin_stdlib_jdk7
+    implementation rootProject.ext.commonDependency.kotlinx_coroutines
+    implementation rootProject.ext.commonDependency.appcompat
+    implementation rootProject.ext.commonDependency.core_ktlx
+    implementation rootProject.ext.commonDependency.constraintlayout
+    implementation rootProject.ext.commonDependency.recyclerview
+    implementation rootProject.ext.lifecycleDependency.lifecycle_extensions
+    implementation rootProject.ext.lifecycleDependency.lifecycle_viewmodel
+    implementation rootProject.ext.lifecycleDependency.lifecycle_livedata
+    implementation rootProject.ext.lifecycleDependency.lifecycle_livedata_ktx
+    implementation rootProject.ext.lifecycleDependency.lifecycle_runtime
+    implementation rootProject.ext.lifecycleDependency.lifecycle_runtime_ktx
+    implementation rootProject.ext.testCommonDependency.test_core
+    implementation rootProject.ext.testCommonDependency.fragment_test
+    implementation rootProject.ext.commonDependency.work_manager
+    implementation rootProject.ext.commonDependency.material
+    implementation rootProject.ext.commonDependency.view_pager2
+
+    // Third Party
+    implementation rootProject.ext.commonDependency.work_manager
+    implementation rootProject.ext.commonDependency.location
+    implementation rootProject.ext.googleDependencies.gson
+    implementation rootProject.ext.thirdPartyDependencies.anko_commond
+    implementation rootProject.ext.thirdPartyDependencies.anko_sdk
+    implementation rootProject.ext.thirdPartyDependencies.anko_appcompat
+    implementation rootProject.ext.thirdPartyDependencies.glide
+    implementation rootProject.ext.thirdPartyDependencies.permission_dispatcher
+    kapt rootProject.ext.thirdPartyDependencies.permission_processor
+    implementation rootProject.ext.thirdPartyDependencies.map_box
+    implementation rootProject.ext.thirdPartyDependencies.map_box_annotations
+    implementation rootProject.ext.thirdPartyDependencies.map_box_turf
+
+    // Camera
+    implementation rootProject.ext.cameraDependency.camerax_core
+    implementation rootProject.ext.cameraDependency.camerax_camera2
+
+    // Test Dependencies:
+    testImplementation rootProject.ext.testCommonDependency.fragment_test
+    testImplementation rootProject.ext.testCommonDependency.runner
+    testImplementation rootProject.ext.testCommonDependency.junit_ext
+    testImplementation rootProject.ext.testCommonDependency.espresso_core
+    testImplementation rootProject.ext.testCommonDependency.robolectric
+    testImplementation rootProject.ext.testCommonDependency.junit
+    testImplementation rootProject.ext.testCommonDependency.koin_test
+    testImplementation rootProject.ext.testCommonDependency.mockito_core
+
+    // Leak Canary:
+    debugImplementation rootProject.ext.debugDependecy.leak_canary
+
+    // Instrumentation Test Dependencies:
+    androidTestImplementation rootProject.ext.testCommonDependency.junit_ext
+    androidTestImplementation rootProject.ext.testCommonDependency.espresso_core
+}
