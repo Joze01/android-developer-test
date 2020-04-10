@@ -8,7 +8,7 @@ import java.util.*
 data class MonthEntryLogModel(
     @PrimaryKey
     val id: Int,
-    val vehiclePlateId: String,
+    val vehicle: VehicleModel,
     val entryDateTime: String,
     val exitDateTime: String? = null,
     val enable: Boolean = false

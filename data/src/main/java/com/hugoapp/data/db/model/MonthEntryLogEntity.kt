@@ -8,14 +8,14 @@ import com.hugoapp.data.util.CoreMapper
 data class MonthEntryLogEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val vehiclePlateId: String,
+    val vehicle: VehicleModel,
     val entryDateTime: String,
     val exitDateTime: String? = null,
     val enable: Boolean = false
 ) : CoreMapper<MonthEntryLogModel> {
     override fun mapToCoreModel() = MonthEntryLogModel(
         id = this.id,
-        vehiclePlateId = this.vehiclePlateId,
+        vehicle = this.vehicle,
         entryDateTime = this.entryDateTime,
         exitDateTime = this.exitDateTime,
         enable = this.enable

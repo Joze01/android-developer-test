@@ -8,10 +8,10 @@ import com.hugoapp.data.util.CoreMapper
 data class VehicleEntity(
     @PrimaryKey
     val plateNumber: String,
-    val vehicleTypeId: Int
+    val type: VehicleTypeModel
 ) : CoreMapper<VehicleModel> {
     override fun mapToCoreModel() = VehicleModel(
         plateNumber = this.plateNumber,
-        vehicleTypeId = this.vehicleTypeId
+        type = this.type
     )
 }

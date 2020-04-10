@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class VehicleModel(
     @PrimaryKey
     val plateNumber: String,
-    val vehicleTypeId: Int
+    val type: VehicleTypeModel
 )

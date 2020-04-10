@@ -14,5 +14,6 @@ interface VehicleDao {
     @Query("SELECT * FROM VehicleEntity")
     suspend fun getVehicleList(): List<VehicleEntity>
 
-
+    @Query("SELECT * FROM VehicleEntity WHERE plateNumber = :plate")
+    suspend fun getVehicleByPlate(plate: String): VehicleEntity
 }

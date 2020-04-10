@@ -8,6 +8,6 @@ import com.hugoapp.data.db.model.VehicleModel
 class EntityMapperHelper {
     fun vehicleModelToEntity(vehicleModel: VehicleModel) = VehicleEntity(
         plateNumber = vehicleModel.plateNumber,
-        vehicleTypeId = vehicleModel.vehicleTypeId
+        type = vehicleModel.type
     )
 }

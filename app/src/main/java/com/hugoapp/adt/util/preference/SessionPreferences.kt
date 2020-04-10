@@ -1,7 +1,7 @@
-package com.sacredvalley.util.preference
+package com.hugoapp.adt.util.preference
 
-import com.sacredvalley.util.preference.base.BasePreference
-import com.sacredvalley.util.preference.base.Preference
+import com.hugoapp.adt.util.preference.base.BasePreference
+import com.hugoapp.adt.util.preference.base.Preference
 
 class SessionPreferences : BasePreference(
     Preference.initializedContext(),

@@ -1,4 +1,4 @@
-package com.sacredvalley.util.preference.base
+package com.hugoapp.adt.util.preference.base
 
 import android.content.Context
 import android.content.SharedPreferences

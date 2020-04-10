@@ -13,7 +13,7 @@ android {
     buildToolsVersion rootProject.ext.buildTool_version
 
     defaultConfig {
-        applicationId "com.applaudo.sacredvalley"
+        applicationId "com.hugoapp.adt"
         minSdkVersion rootProject.ext.min_sdk_version
         targetSdkVersion rootProject.ext.target_sdk_version
         versionCode readVersionCode()

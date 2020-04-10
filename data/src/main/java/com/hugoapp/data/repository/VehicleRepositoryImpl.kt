@@ -2,7 +2,6 @@ package com.hugoapp.data.repository
 
 import com.hugoapp.core.interactor.repository.VehicleRepository
 import com.hugoapp.data.db.dao.VehicleDao
-import com.hugoapp.data.db.model.VehicleEntity
 import com.hugoapp.data.db.model.VehicleModel
 import com.hugoapp.data.util.EntityMapperHelper
 
@@ -22,4 +21,7 @@ class VehicleRepositoryImpl(
         }
         return vehicleList
     }
+
+    override suspend fun asyncGetVehicleByPlate(plate: String): VehicleModel =
+        dao.getVehicleByPlate(plate).mapToCoreModel()
 }

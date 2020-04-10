@@ -6,4 +6,6 @@ interface VehicleRepository {
     suspend fun asyncCreateVehicle(vehicleModel: VehicleModel)
 
     suspend fun asyncGetVehicleList(): List<VehicleModel>?
+
+    suspend fun asyncGetVehicleByPlate(plate: String): VehicleModel
 }
