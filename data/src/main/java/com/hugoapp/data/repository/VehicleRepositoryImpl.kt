@@ -1,5 +1,6 @@
 package com.hugoapp.data.repository
 
+import android.util.Log
 import com.hugoapp.core.interactor.repository.VehicleRepository
 import com.hugoapp.data.db.dao.VehicleDao
 import com.hugoapp.data.db.model.VehicleModel
@@ -10,8 +11,10 @@ class VehicleRepositoryImpl(
     private val mapperHelper: EntityMapperHelper
 ) : VehicleRepository {
 
-    override suspend fun asyncCreateVehicle(vehicleModel: VehicleModel) =
+    override suspend fun asyncCreateVehicle(vehicleModel: VehicleModel) {
+        Log.wtf("JAAC", "${vehicleModel.plateNumber} ${vehicleModel.type}")
         dao.insert(mapperHelper.vehicleModelToEntity(vehicleModel))
+    }
 
     override suspend fun asyncGetVehicleList(): List<VehicleModel> {
         val vehicleList: MutableList<VehicleModel> = mutableListOf()

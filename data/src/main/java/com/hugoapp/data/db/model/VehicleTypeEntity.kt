@@ -11,7 +11,8 @@ data class VehicleTypeEntity(
     val typeName: String,
     val typeDescription: String? = null,
     val isPaymentRequired: Boolean = true,
-    val isLargeDuration: Boolean = false
+    val farePerMinute: Double = 0.0
+
 
 ) : CoreMapper<VehicleTypeModel> {
     override fun mapToCoreModel() = VehicleTypeModel(
@@ -19,6 +20,6 @@ data class VehicleTypeEntity(
         typeName = this.typeName,
         typeDescription = this.typeDescription,
         isPaymentRequired = this.isPaymentRequired,
-        isLargeDuration = this.isLargeDuration
+        farePerMinute = this.farePerMinute
     )
 }

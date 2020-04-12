@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import com.hugoapp.adt.presentation.util.Event
 
 abstract class BaseActivity : AppCompatActivity() {
 

@@ -1,6 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="vehicleViewModel"
+            type="com.hugoapp.adt.presentation.parking.vehicles.VehicleViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhiteText"
+        android:clickable="true"
+        android:padding="8dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_plate_number"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            visible="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="@string/vehicle_plate_label"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@null"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_plate_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:lines="1"
+                android:text="@={vehicleViewModel.vehiclePlateObservableField}"
+                android:textSize="14sp"
+                app:hintEnabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_vehicleType"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            visible="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="@string/new_vehicle_type_label"
+            app:errorEnabled="true"
+            app:errorIconDrawable="@null"
+            app:hintEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_plate_number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_document_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_arrow_down"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:lines="1"
+                android:text="@{vehicleViewModel.vehicleTypeObservableField}"
+                android:textSize="14sp"
+                app:hintEnabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/textButton"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/sp_back_button"
+            android:onClick="@{()->vehicleViewModel.onSaveClick()}"
+            android:text="@string/new_vehicle_save"
+            android:textColor="@color/colorWhiteText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_vehicleType" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

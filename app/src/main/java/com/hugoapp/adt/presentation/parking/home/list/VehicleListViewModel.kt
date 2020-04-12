@@ -1,4 +1,4 @@
-package com.hugoapp.adt.presentation.parking.home
+package com.hugoapp.adt.presentation.parking.home.list
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -34,7 +34,7 @@ class VehicleListViewModel(
         }
     }
 
-    fun addNewFragment() {
+    fun onAddNewVehicle() {
         fragmentNavigationObservable.value = Event(FragmentNavigationEvents.NEW_VEHICLE_FRAGMENT)
     }
 

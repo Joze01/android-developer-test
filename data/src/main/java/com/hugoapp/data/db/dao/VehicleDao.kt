@@ -9,7 +9,7 @@ import com.hugoapp.data.db.model.VehicleEntity
 @Dao
 interface VehicleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vehicle: VehicleEntity)
+    suspend fun insert(vehicle: VehicleEntity)
 
     @Query("SELECT * FROM VehicleEntity")
     suspend fun getVehicleList(): List<VehicleEntity>

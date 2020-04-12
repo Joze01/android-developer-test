@@ -11,7 +11,6 @@ open class ADTApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Preference.with(applicationContext)
-        // TODO: Working in progress adding share preference with KOIN DI
 
         startKoin {
             androidContext(this@ADTApplication)

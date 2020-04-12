@@ -2,5 +2,17 @@
     <string name="app_name">ADT</string>
 
     <string name="home_appbar_tittle">Vehicles List</string>
+    <string name="home_vehicle_tab">Vehicle List</string>
+    <string name="home_vehicle_log_tab">Vehicle Log</string>
+
+
+    <string name="vehicle_item_plate_label">Plate Number</string>
+    <string name="vehicle_item_type_name">Vehicle Type</string>
+
+    <string name="list_empty">No Data to Show</string>
+    <string name="vehicle_title">New Vehicle</string>
+    <string name="vehicle_plate_label">Vehicle Plate</string>
+    <string name="new_vehicle_type_label">Vehicle Type</string>
+    <string name="new_vehicle_save">Save new vehicle</string>
 
 </resources>

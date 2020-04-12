@@ -10,5 +10,5 @@ data class VehicleTypeModel(
     val typeName: String,
     val typeDescription: String? = null,
     val isPaymentRequired: Boolean = true,
-    val isLargeDuration: Boolean = false
+    val farePerMinute: Double = 0.0
 )

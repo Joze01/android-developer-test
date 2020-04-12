@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="homeViewModel"
-            type="com.hugoapp.adt.presentation.parking.home.VehicleListViewModel" />
+            name="vehicleListViewModel"
+            type="com.hugoapp.adt.presentation.parking.home.list.VehicleListViewModel" />
 
     </data>
 
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/colorPrimary"
-            android:onClick="@{()->homeViewModel.addNewFragment()}"
+            android:onClick="@{()->vehicleListViewModel.onAddNewVehicle()}"
             android:layout_margin="4dp"
             android:src="@drawable/ic_more"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
             android:layout_height="match_parent" />
 
         <TextView
-            visible="@{homeViewModel.noDataVisible}"
+            visible="@{vehicleListViewModel.noDataVisible}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/list_empty"

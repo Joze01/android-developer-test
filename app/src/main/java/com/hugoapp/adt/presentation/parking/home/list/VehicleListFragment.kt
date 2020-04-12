@@ -1,4 +1,4 @@
-package com.hugoapp.adt.presentation.parking.home
+package com.hugoapp.adt.presentation.parking.home.list
 
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(
-    R.layout.fragment_vehicle_list, BR.homeViewModel
+    R.layout.fragment_vehicle_list, BR.vehicleListViewModel
 ) {
     override val viewModel: VehicleListViewModel by viewModel()
     val sharedViewModel: MainViewModel by sharedViewModel()
