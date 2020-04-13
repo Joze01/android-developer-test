@@ -6,7 +6,7 @@
 
         <variable
             name="vehicleListViewModel"
-            type="com.hugoapp.adt.presentation.parking.home.list.VehicleListViewModel" />
+            type="com.hugoapp.adt.presentation.parking.vehicles.list.VehicleListViewModel" />
 
     </data>
 
@@ -18,23 +18,39 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="4dp"
             android:backgroundTint="@color/colorPrimary"
             android:onClick="@{()->vehicleListViewModel.onAddNewVehicle()}"
-            android:layout_margin="4dp"
             android:src="@drawable/ic_more"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_vehicles"
+            visible="@{!vehicleListViewModel.noDataVisible}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             visible="@{vehicleListViewModel.noDataVisible}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/list_empty"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ProgressBar
+            visible="@{vehicleListViewModel.progressBarVisible}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

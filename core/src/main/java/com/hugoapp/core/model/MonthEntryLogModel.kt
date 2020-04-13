@@ -2,7 +2,6 @@ package com.hugoapp.data.db.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity
 data class MonthEntryLogModel(

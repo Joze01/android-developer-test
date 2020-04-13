@@ -7,8 +7,8 @@ import com.hugoapp.adt.R
 import com.hugoapp.adt.databinding.ActivityMainBinding
 import com.hugoapp.adt.presentation.base.BaseActivity
 import com.hugoapp.adt.presentation.parking.home.HomeFragment
-import com.hugoapp.adt.presentation.parking.home.list.VehicleListFragment
 import com.hugoapp.adt.presentation.parking.vehicles.VehicleFragment
+import com.hugoapp.adt.presentation.parking.vehicles.list.VehicleListFragment
 import com.hugoapp.adt.presentation.util.Event
 import com.hugoapp.adt.presentation.util.FragmentNavigationEvents
 import org.koin.androidx.viewmodel.ext.android.viewModel

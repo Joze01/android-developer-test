@@ -14,5 +14,6 @@
     <string name="vehicle_plate_label">Vehicle Plate</string>
     <string name="new_vehicle_type_label">Vehicle Type</string>
     <string name="new_vehicle_save">Save new vehicle</string>
+    <string name="vehicleLog_search">Search</string>
 
 </resources>

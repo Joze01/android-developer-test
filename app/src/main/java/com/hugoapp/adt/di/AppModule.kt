@@ -2,7 +2,8 @@ package com.hugoapp.adt.di
 
 import com.hugoapp.adt.presentation.parking.MainViewModel
 import com.hugoapp.adt.presentation.parking.home.HomeViewModel
-import com.hugoapp.adt.presentation.parking.home.list.VehicleListViewModel
+import com.hugoapp.adt.presentation.parking.log.LogViewModel
+import com.hugoapp.adt.presentation.parking.vehicles.list.VehicleListViewModel
 import com.hugoapp.adt.presentation.parking.vehicles.VehicleViewModel
 import com.hugoapp.core.interactor.repository.VehicleRepository
 import com.hugoapp.core.interactor.usecase.CreateVehicleUseCase
@@ -30,17 +31,6 @@ val appModule = module {
     // Dispatcher
     factory { AppDispatchers(Dispatchers.Main, Dispatchers.IO) }
 
-    // ViewModel
-    factory { VehicleListViewModel(get(), get()) }
-    factory { MainViewModel(resourceManage = get()) }
-    factory {
-        VehicleViewModel(
-            dispatcher = get(),
-            createVehicleUseCase = get()
-        )
-    }
-    factory { HomeViewModel() }
-
     // Repositories
     single {
         VehicleRepositoryImpl(
@@ -52,5 +42,18 @@ val appModule = module {
     // Use case
     factory { GetVehiclesListUseCase(get()) }
     factory { CreateVehicleUseCase(get()) }
+
+    // ViewModel
+    factory { VehicleListViewModel(get(), get()) }
+    factory { MainViewModel(resourceManage = get()) }
+    factory {
+        VehicleViewModel(
+            dispatcher = get(),
+            createVehicleUseCase = get()
+        )
+    }
+    factory { HomeViewModel() }
+    factory { LogViewModel() }
+
 
 }

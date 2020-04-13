@@ -7,7 +7,7 @@
 
         <variable
             name="itemViewModel"
-            type="com.hugoapp.adt.presentation.parking.home.list.VehicleItemViewModel" />
+            type="com.hugoapp.adt.presentation.parking.vehicles.list.VehicleItemViewModel" />
 
     </data>
 

@@ -1,4 +1,4 @@
-package com.hugoapp.adt.presentation.parking.home.list
+package com.hugoapp.adt.presentation.parking.vehicles.list
 
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +10,6 @@ import com.hugoapp.adt.R
 import com.hugoapp.adt.databinding.FragmentVehicleListBinding
 import com.hugoapp.adt.presentation.base.BaseFragment
 import com.hugoapp.adt.presentation.parking.MainViewModel
-import com.hugoapp.adt.presentation.parking.home.list.VehicleListAdapter
 import com.hugoapp.adt.presentation.util.Event
 import com.hugoapp.adt.presentation.util.FragmentNavigationEvents
 import com.hugoapp.data.db.model.VehicleModel
@@ -29,7 +28,6 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(
         viewModel.fragmentNavigationObservable.observe(viewLifecycleOwner, navigationObserver())
         viewModel.itemClickEvent.observe(viewLifecycleOwner, selectedItemObserver())
         viewModel.vehicleData.observe(viewLifecycleOwner, vehicleListObserver())
-        viewModel.getListData()
     }
 
     fun selectedItemObserver() = Observer<Event<VehicleModel>> { event ->
@@ -38,11 +36,12 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(
         }
     }
 
-    fun vehicleListObserver() = Observer<Event<List<VehicleModel>>> { event ->
-        event.getContentIfNotHandled()?.let {
+    fun vehicleListObserver() = Observer<ArrayList<VehicleModel>> { vehicleList ->
+        vehicleList?.let {
             binding.rvVehicles.adapter =
                 VehicleListAdapter(it, viewModel.itemClickEvent)
         }
+
     }
 
     fun navigationObserver() = Observer<Event<FragmentNavigationEvents>> { event ->
@@ -55,10 +54,8 @@ class VehicleListFragment : BaseFragment<FragmentVehicleListBinding>(
     }
 
     override fun onResume() {
-        super.onResume()
-        sharedViewModel.backButtonVisible.set(false)
-        sharedViewModel.appBarTitleObservableField.set(getString(R.string.home_appbar_tittle))
         viewModel.getListData()
+        super.onResume()
     }
 
     companion object {

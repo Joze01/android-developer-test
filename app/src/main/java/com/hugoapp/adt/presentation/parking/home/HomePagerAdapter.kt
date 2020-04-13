@@ -4,7 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.hugoapp.adt.presentation.parking.home.list.VehicleListFragment
+import com.hugoapp.adt.presentation.parking.log.LogFragment
+import com.hugoapp.adt.presentation.parking.vehicles.list.VehicleListFragment
 
 class HomePagerAdapter(
     fragmentManger: FragmentManager,
@@ -15,7 +16,7 @@ class HomePagerAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return if (position == INITIAL_PAGE) {
-            VehicleListFragment.newInstance()
+            LogFragment.newInstance()
         } else {
             VehicleListFragment.newInstance()
         }

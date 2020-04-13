@@ -1,4 +1,4 @@
-package com.hugoapp.adt.presentation.parking.home.list
+package com.hugoapp.adt.presentation.parking.vehicles.list
 
 import android.view.LayoutInflater
 import android.view.View

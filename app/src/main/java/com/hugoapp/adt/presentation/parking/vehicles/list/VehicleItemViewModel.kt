@@ -1,4 +1,4 @@
-package com.hugoapp.adt.presentation.parking.home.list
+package com.hugoapp.adt.presentation.parking.vehicles.list
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
